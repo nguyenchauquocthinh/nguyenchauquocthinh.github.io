@@ -5,6 +5,7 @@
   <title>Flat Business Profile Widget</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* [CSS giữ nguyên như bạn đã có] */
     body {
       background-color: #A67C52;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -117,6 +118,14 @@
       © 2025 Flat Business Profile Widget. All rights reserved
     </div>
   </div>
+
+  <!-- JS xử lý chuyển hướng -->
+  <script>
+    document.querySelector(".submit-btn").addEventListener("click", function () {
+      // Chuyển hướng sau khi nhấn Submit
+      window.location.href = "home.html";
+    });
+  </script>
 
 </body>
 </html>
