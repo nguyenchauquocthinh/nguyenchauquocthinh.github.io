@@ -1,107 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <title>Trang Chủ Bán Hàng</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background: #f9f1e7;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f2e4;
+      padding: 0;
+      display: flex;
     }
 
-    header {
-      background-color: #8B5E3C;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+    .main {
+      flex: 3;
       padding: 20px;
     }
 
     .product {
       background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       padding: 15px;
-      text-align: center;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
     .product img {
-      width: 100%;
-      height: 150px;
+      width: 100px;
+      height: 100px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 5px;
+    }
+
+    .product-info {
+      flex: 1;
     }
 
     .product h3 {
-      font-size: 18px;
-      margin: 10px 0 5px;
-      color: #8B5E3C;
-    }
-
-    .product p {
-      color: #333;
-      margin: 0 0 10px;
+      margin: 0 0 5px;
     }
 
     .product button {
       background-color: #A67C52;
       color: white;
       border: none;
-      padding: 8px 12px;
+      padding: 8px 15px;
       border-radius: 5px;
       cursor: pointer;
     }
 
-    footer {
-      text-align: center;
-      padding: 15px;
+    .cart {
+      flex: 1;
       background-color: #D9C7A6;
-      color: #333;
+      padding: 20px;
+      border-left: 2px solid #ccc;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .cart h2 {
+      margin-top: 0;
+    }
+
+    .cart-item {
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .total {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .payment {
       margin-top: 20px;
+    }
+
+    .payment label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .payment input {
+      margin-right: 5px;
+    }
+
+    .pay-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #8B5E3C;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Chào Mừng Bạn Đến Với Shop Online</h1>
-  </header>
+  <div class="main">
+    <h1>Chào mừng đến với cửa hàng!</h1>
 
-  <div class="products">
     <div class="product">
       <img src="image/áo thun nam.jpg" alt="Áo Thun Nam">
-      <h3>Áo Thun Nam</h3>
-      <p>Giá: 150.000đ</p>
-      <button>Mua ngay</button>
+      <div class="product-info">
+        <h3>Áo Thun - 100,000đ</h3>
+        <button onclick="addToCart('Áo Thun', 100000)">Thêm vào giỏ</button>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="image/balo.webp" alt="Ba Lô Học Sinh">
+      <div class="product-info">
+        <h3>Quần Jean - 250,000đ</h3>
+        <button onclick="addToCart('Quần Jean', 250000)">Thêm vào giỏ</button>
+      </div>
     </div>
 
     <div class="product">
       <img src="image/giày.jpeg" alt="Giày Sneaker">
-      <h3>Giày Sneaker</h3>
-      <p>Giá: 450.000đ</p>
-      <button>Mua ngay</button>
-    </div>
-
-    <div class="product">
-     <img src="image/balo.webp" alt="Ba lô học sinh">
-      <h3>Ba lô học sinh</h3>
-      <p>Giá: 200.000đ</p>
-      <button>Mua ngay</button>
+      <div class="product-info">
+        <h3>Giày Sneaker - 500,000đ</h3>
+        <button onclick="addToCart('Giày Sneaker', 500000)">Thêm vào giỏ</button>
+      </div>
     </div>
   </div>
 
-  <footer>
-    © 2025 Shop Online Việt Nam. All rights reserved.
-  </footer>
+  <div class="cart">
+    <h2>🛒 Giỏ hàng</h2>
+    <div id="cart-items"></div>
+    <div class="total" id="cart-total">Tổng cộng: 0đ</div>
+
+    <div class="payment">
+      <label><input type="radio" name="payment" value="Tiền mặt" checked> Thanh toán tiền mặt</label>
+      <label><input type="radio" name="payment" value="Chuyển khoản"> Chuyển khoản ngân hàng</label>
+      <button class="pay-btn" onclick="checkout()">Thanh Toán</button>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      total += price;
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = "";
+
+      cart.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
+        cartItemsDiv.appendChild(itemDiv);
+      });
+
+      document.getElementById("cart-total").textContent = `Tổng cộng: ${total.toLocaleString()}đ`;
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Bạn chưa có sản phẩm nào trong giỏ hàng!");
+        return;
+      }
+
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      alert(`Cảm ơn bạn đã mua hàng!\nTổng tiền: ${total.toLocaleString()}đ\nHình thức thanh toán: ${paymentMethod}`);
+
+      // Xóa giỏ hàng sau thanh toán
+      cart = [];
+      total = 0;
+      renderCart();
+    }
+  </script>
 
 </body>
 </html>
+
+
 

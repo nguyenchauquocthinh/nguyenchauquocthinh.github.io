@@ -77,8 +77,13 @@
       background-color: #FFFFCC;
     }
 
-    .submit-btn {
-      width: 84%;
+    .button-row {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+
+    .submit-btn, .signup-toggle-btn, .signup-btn {
       padding: 10px;
       background-color: #8B5E3C;
       color: white;
@@ -86,12 +91,19 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      flex: 1;
+      margin: 0 5px;
     }
 
     .footer {
       margin-top: 20px;
       font-size: 11px;
       color: #fff;
+    }
+
+    #signup-form {
+      display: none;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -100,37 +112,88 @@
   <div class="login-container">
     <img class="profile-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Profile Picture">
     <h2>Chào Mọi Người Nha</h2>
-    
+
+    <!-- Đăng nhập -->
     <div class="input-group">
       <i class="fa fa-user"></i>
-      <input id="username" type="text" placeholder="Tên đăng nhập">
+      <input id="login-username" type="text" placeholder="Tên đăng nhập">
     </div>
-    
+
     <div class="input-group">
       <i class="fa fa-lock"></i>
-      <input id="password" type="password" placeholder="Vui lòng nhập mật khẩu">
+      <input id="login-password" type="password" placeholder="Mật khẩu">
     </div>
-    
-    <button class="submit-btn" onclick="login()">Submit</button>
-    
+
+    <div class="button-row">
+      <button class="submit-btn" onclick="login()">Đăng nhập</button>
+      <button class="signup-toggle-btn" onclick="toggleSignup()">Tạo tài khoản</button>
+    </div>
+
+    <!-- Form tạo tài khoản (ẩn) -->
+    <div id="signup-form">
+      <div class="input-group">
+        <i class="fa fa-user-plus"></i>
+        <input id="signup-username" type="text" placeholder="Tạo tên đăng nhập">
+      </div>
+
+      <div class="input-group">
+        <i class="fa fa-lock"></i>
+        <input id="signup-password" type="password" placeholder="Tạo mật khẩu">
+      </div>
+
+      <button class="signup-btn" onclick="signup()">Xác nhận tạo</button>
+    </div>
+
     <div class="footer">
       © 2025 Flat Business Profile Widget. All rights reserved
     </div>
   </div>
 
   <script>
-    function login() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+  function toggleSignup() {
+    const signupForm = document.getElementById("signup-form");
+    signupForm.style.display = signupForm.style.display === "none" ? "block" : "none";
+  }
 
-      if (username === "quocthinh" && password === "1234") {
-        window.location.href = "home.html"; // Chuyển đến trang chủ
-      } else {
-        alert("Sai tên đăng nhập hoặc mật khẩu!");
-      }
+  function signup() {
+    const username = "quocthinh";
+    const password = "1234";
+
+    if (localStorage.getItem(username)) {
+      alert("Tên đăng nhập đã tồn tại.");
+      return;
     }
-  </script>
+
+    localStorage.setItem(username, password);
+    alert("Tạo tài khoản thành công!");
+    document.getElementById("signup-form").style.display = "none";
+  }
+
+  function login() {
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+
+    const storedPassword = localStorage.getItem(username);
+
+    if (storedPassword === password) {
+      alert("Đăng nhập thành công!");
+      window.location.href = "home.html"; // Thay bằng đường dẫn trang chủ thật
+    } else {
+      alert("Sai tên đăng nhập hoặc mật khẩu!");
+    }
+  }
+
+  // Tự động thêm tài khoản mặc định khi trang tải lần đầu
+  window.onload = () => {
+    if (!localStorage.getItem("quocthinh")) {
+      localStorage.setItem("quocthinh", "1234");
+    }
+  };
+</script>
+
 
 </body>
 </html>
+
+
 
