@@ -5,7 +5,6 @@
   <title>Flat Business Profile Widget</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* [CSS giữ nguyên như bạn đã có] */
     body {
       background-color: #A67C52;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -100,32 +99,38 @@
 
   <div class="login-container">
     <img class="profile-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Profile Picture">
-    <h2>Chào Mọi Người Nha </h2>
+    <h2>Chào Mọi Người Nha</h2>
     
     <div class="input-group">
       <i class="fa fa-user"></i>
-      <input type="text" placeholder="Tên đăng nhập">
+      <input id="username" type="text" placeholder="Tên đăng nhập">
     </div>
     
     <div class="input-group">
       <i class="fa fa-lock"></i>
-      <input type="password" placeholder="Vui lòng nhập mật khẩu">
+      <input id="password" type="password" placeholder="Vui lòng nhập mật khẩu">
     </div>
     
-    <button class="submit-btn">Submit</button>
+    <button class="submit-btn" onclick="login()">Submit</button>
     
     <div class="footer">
       © 2025 Flat Business Profile Widget. All rights reserved
     </div>
   </div>
 
-  <!-- JS xử lý chuyển hướng -->
   <script>
-    document.querySelector(".submit-btn").addEventListener("click", function () {
-      // Chuyển hướng sau khi nhấn Submit
-      window.location.href = "home.html";
-    });
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      if (username === "quocthinh" && password === "1234") {
+        window.location.href = "home.html"; // Chuyển đến trang chủ
+      } else {
+        alert("Sai tên đăng nhập hoặc mật khẩu!");
+      }
+    }
   </script>
 
 </body>
 </html>
+
